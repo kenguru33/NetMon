@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="NetMon">
+    <output-path>$PROJECT_DIR$/out/artifacts/NetMon</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="cx.virtlab.netmon.NetMonApplication" />
+        <option name="description" value="" />
+        <option name="htmlParamFile" value="" />
+        <option name="paramFile" value="" />
+        <option name="title" value="NetMon" />
+        <option name="vendor" value="cx.virtlab" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="NetMon.jar">
+        <element id="module-output" name="NetMon" />
+      </element>
+    </root>
+  </artifact>
+</component>
