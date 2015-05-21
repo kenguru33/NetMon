@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cx.virtlab.netmon.MonitorController">
+   <children>
+      <HBox spacing="10.0">
+         <children>
+            <Button mnemonicParsing="false" text="Update" />
+            <ChoiceBox prefWidth="150.0" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false" text="Settings" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+      <TextArea text="Probing 127.0.0.1&#10;&#10;VPN connected!&#10;&#10;" />
+      <Label text="Label" />
+   </children>
+</VBox>
