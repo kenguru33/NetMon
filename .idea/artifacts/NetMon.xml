@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/NetMon</output-path>
     <properties id="javafx-properties">
       <options>
-        <option name="appClass" value="cx.virtlab.netmon.NetMonApplication" />
+        <option name="appClass" value="cx.virtlab.netmon.MonitorApplication" />
         <option name="description" value="" />
         <option name="htmlParamFile" value="" />
         <option name="paramFile" value="" />

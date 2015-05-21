@@ -8,7 +8,7 @@ import java.net.InetAddress;
 /**
  * Created by bernt on 21.05.15.
  */
-public class Monitor {
+public class Monitor implements Runnable {
 
     private StringProperty url;
     private BooleanProperty connected;
@@ -27,20 +27,7 @@ public class Monitor {
         this.interval = new SimpleLongProperty(1000);
         this.connected = new SimpleBooleanProperty(false);
         this.continues = new SimpleBooleanProperty(false);
-
-        this.thread = new Thread(){
-            public void run(){
-                while (true) {
-                    updateStatus();
-                    try {
-                        sleep(getInterval());
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
-
+        this.thread = new Thread(this);
     }
 
     public static Monitor createMonitor() {
@@ -48,10 +35,11 @@ public class Monitor {
     }
 
     public void updateStatus() {
-        System.out.println("updating status...");
+        System.out.print("Is connected: ");
         try {
             InetAddress address = InetAddress.getByName(this.getUrl());
             this.setConnected(address.isReachable(this.getTimeout()));
+            System.out.println(this.getConnected());
         } catch (IOException e) {
             e.printStackTrace();
             this.setStatusMessage(e.getMessage());
@@ -127,12 +115,31 @@ public class Monitor {
     }
 
     public void setContinues(boolean continues) {
-        this.continues.set(continues);
-        if (continues) {
-            this.thread.start();
-            System.out.println("Thread started...");
-        } else {
-            System.out.println("Stop thread here");
+        if (this.getContinues() != continues) {
+            this.continues.set(continues);
+            if (continues) {
+                System.out.println("Thread starting...");
+                this.thread.start();
+            } else {
+                this.thread.interrupt();
+                System.out.println("Thread stopping...");
+                this.thread = new Thread(this);
+            }
         }
+    }
+
+    @Override
+    public void run() {
+        while (!this.thread.currentThread().isInterrupted()) {
+            System.out.println("Update Connection Status...");
+            try {
+                Thread.sleep(getInterval());
+            } catch (InterruptedException e) {
+                System.out.println("Interrupt while sleeping...");
+                Thread.currentThread().interrupt();
+            }
+        }
+        System.out.println("thread quitting...");
+        return;
     }
 }
