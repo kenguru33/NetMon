@@ -16,18 +16,20 @@ public class Monitor implements Runnable {
     private IntegerProperty timeout;
     private LongProperty interval;
     private BooleanProperty continues;
+    private BooleanProperty useNativePing;
     private Thread thread;
 
 
     private Monitor() {
 
-        this.url = new SimpleStringProperty("localhost");
+        this.url = new SimpleStringProperty("10.1.1.254");
         this.statusMessage = new SimpleStringProperty("No status message defined");
-        this.timeout = new SimpleIntegerProperty(10);
+        this.timeout = new SimpleIntegerProperty(1000);
         this.interval = new SimpleLongProperty(1000);
         this.connected = new SimpleBooleanProperty(false);
         this.continues = new SimpleBooleanProperty(false);
-        this.thread = new Thread(this);
+        this.useNativePing = new SimpleBooleanProperty(false);
+        //this.thread = new Thread(this);
     }
 
     public static Monitor createMonitor() {
@@ -35,14 +37,34 @@ public class Monitor implements Runnable {
     }
 
     public void updateStatus() {
+
         System.out.print("Is connected: ");
-        try {
-            InetAddress address = InetAddress.getByName(this.getUrl());
-            this.setConnected(address.isReachable(this.getTimeout()));
+        if (this.getUseNativePing()) {
+            Process p1 = null;
+            try {
+                p1 = Runtime.getRuntime().exec("ping -c " + this.getInterval()/1000 + " " + this.getUrl());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            int returnVal = 0;
+            try {
+                returnVal = p1.waitFor();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            boolean reachable = (returnVal==0);
+            this.setConnected(reachable);
             System.out.println(this.getConnected());
-        } catch (IOException e) {
-            e.printStackTrace();
-            this.setStatusMessage(e.getMessage());
+
+        } else {
+            try {
+                InetAddress address = InetAddress.getByName(this.getUrl());
+                this.setConnected(address.isReachable(this.getTimeout()));
+                System.out.println(this.getConnected());
+            } catch (IOException e) {
+                e.printStackTrace();
+                this.setStatusMessage(e.getMessage());
+            }
         }
     }
 
@@ -102,7 +124,7 @@ public class Monitor implements Runnable {
         return interval;
     }
 
-    public void setInterval(int interval) {
+    public void setInterval(long interval) {
         this.interval.set(interval);
     }
 
@@ -115,31 +137,48 @@ public class Monitor implements Runnable {
     }
 
     public void setContinues(boolean continues) {
+        // check if state is changing
         if (this.getContinues() != continues) {
             this.continues.set(continues);
+            // if state is changing to continues
             if (continues) {
-                System.out.println("Thread starting...");
-                this.thread.start();
-            } else {
-                this.thread.interrupt();
-                System.out.println("Thread stopping...");
+                System.out.println("Continues mode starting...");
                 this.thread = new Thread(this);
+                this.thread.start();
+            }
+            // else, state is non-continous and emit interrup to stop thread.
+            else {
+                this.thread.interrupt();
+                System.out.println("Exiting Continues mode...");
             }
         }
     }
 
+    public boolean getUseNativePing() {
+        return useNativePing.get();
+    }
+
+    public BooleanProperty useNativePingProperty() {
+        return useNativePing;
+    }
+
+    public void setUseNativePing(boolean useNativePing) {
+        this.useNativePing.set(useNativePing);
+    }
+
     @Override
     public void run() {
-        while (!this.thread.currentThread().isInterrupted()) {
-            System.out.println("Update Connection Status...");
+        while (!this.thread.isInterrupted()) {
+            //System.out.println("Running in Continues mode.");
+            this.updateStatus();
             try {
+                // lag sjekk for at intervall ikke er kortere en ping timeout.
                 Thread.sleep(getInterval());
             } catch (InterruptedException e) {
-                System.out.println("Interrupt while sleeping...");
-                Thread.currentThread().interrupt();
+                this.thread.interrupt();
             }
         }
-        System.out.println("thread quitting...");
-        return;
+        this.thread.interrupt();
+        //System.out.println("Runnning manual mode.");
     }
 }

@@ -16,6 +16,7 @@ public class MonitorController implements Initializable {
     public MonitorController() {
         this.monitor = Monitor.createMonitor();
 
+        this.monitor.setUseNativePing(true);
         this.monitor.setContinues(true);
 
         try {
