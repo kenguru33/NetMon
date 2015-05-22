@@ -3,6 +3,7 @@ package cx.virtlab.netmon;
 import javafx.beans.property.*;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.InetAddress;
 
 /**
@@ -37,12 +38,11 @@ public class Monitor implements Runnable {
     }
 
     public void updateStatus() {
-
         System.out.print("Is connected: ");
         if (this.getUseNativePing()) {
             Process p1 = null;
             try {
-                p1 = Runtime.getRuntime().exec("ping -c " + this.getInterval()/1000 + " " + this.getUrl());
+                p1 = Runtime.getRuntime().exec("ping -c 1 -t " + this.getTimeout() + this.getUrl());
             } catch (IOException e) {
                 e.printStackTrace();
             }

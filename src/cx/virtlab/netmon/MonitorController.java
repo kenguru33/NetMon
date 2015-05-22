@@ -1,6 +1,9 @@
 package cx.virtlab.netmon;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ToggleButton;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,24 +16,23 @@ public class MonitorController implements Initializable {
 
     public Monitor monitor;
 
+
+    @FXML
+    private ToggleButton toggleModeButton;
+
+    @FXML
+    private void handleToggleModeButtonAction(ActionEvent event) {
+        if (((ToggleButton)event.getSource()).isSelected()) {
+            this.monitor.setContinues(true);
+        } else this.monitor.setContinues(false);
+    }
+
+
+
     public MonitorController() {
         this.monitor = Monitor.createMonitor();
 
         this.monitor.setUseNativePing(true);
-        this.monitor.setContinues(true);
-
-        try {
-            TimeUnit.SECONDS.sleep(10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        this.monitor.setContinues(false);
-        try {
-            TimeUnit.SECONDS.sleep(10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        this.monitor.setContinues(true);
 
     }
 

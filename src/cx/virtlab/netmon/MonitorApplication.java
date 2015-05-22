@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import com.guigarage.css.*;
 
 /**
  * Created by bernt on 21.05.15.

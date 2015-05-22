@@ -9,6 +9,7 @@
    <children>
       <HBox spacing="10.0">
          <children>
+            <ToggleButton fx:id="toggleModeButton" mnemonicParsing="false" onAction="#handleToggleModeButtonAction" text="Continues Mode" />
             <Button mnemonicParsing="false" text="Update" />
             <ChoiceBox prefWidth="150.0" />
             <Region HBox.hgrow="ALWAYS" />
