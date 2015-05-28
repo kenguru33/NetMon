@@ -1,25 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cx.virtlab.netmon.MonitorController">
-   <children>
-      <HBox spacing="10.0">
-         <children>
-            <ToggleButton fx:id="toggleModeButton" mnemonicParsing="false" onAction="#handleToggleModeButtonAction" text="Continues Mode" />
-            <Button mnemonicParsing="false" text="Update" />
-            <ChoiceBox prefWidth="150.0" />
-            <Region HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" text="Settings" />
-         </children>
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cx.virtlab.netmon.MonitorController">
+   <bottom>
+      <Label text="Label" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
-      </HBox>
-      <TextArea text="Probing 127.0.0.1&#10;&#10;VPN connected!&#10;&#10;" />
-      <Label text="Label" />
-   </children>
-</VBox>
+         </padding></Label>
+   </bottom>
+   <top>
+      <ToolBar BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
+         <items>
+            <ToggleButton fx:id="toggleModeButton" mnemonicParsing="false" text="AutoMode" />
+            <TextField prefHeight="26.0" prefWidth="67.0" />
+            <ChoiceBox prefWidth="150.0" />
+            <Button mnemonicParsing="false" text="Probe" />
+            <Region minWidth="100.0" HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false" text="Settings" />
+         </items>
+      </ToolBar>
+   </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+              </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </center>
+   <left>
+      <TreeView fx:id="serviceTreeView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </left>
+</BorderPane>
