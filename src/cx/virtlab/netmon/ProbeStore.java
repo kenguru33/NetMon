@@ -21,9 +21,7 @@ public class ProbeStore {
     }
 
     private void dummyData() {
-        this.probes.add(PingProbe.createPingProbe("vg.no",1000));
-        this.probes.add(PingProbe.createPingProbe("localhost",1000));
-        this.probes.add(PingProbe.createPingProbe("linux.no",1000));
+
     }
 
     public void load(String filename) {

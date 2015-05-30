@@ -16,11 +16,13 @@
    <top>
       <ToolBar BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
          <items>
+            <Button fx:id="addGroupButton" mnemonicParsing="false" onAction="#handleAddGroupAction" text="Add Group" />
+            <Button mnemonicParsing="false" onAction="#handleAddProbeAction" text="Add Probe" />
             <ToggleButton fx:id="toggleModeButton" mnemonicParsing="false" text="AutoMode" />
             <TextField prefHeight="26.0" prefWidth="67.0" />
             <ChoiceBox prefWidth="150.0" />
             <Button mnemonicParsing="false" text="Probe" />
-            <Region minWidth="100.0" HBox.hgrow="ALWAYS" />
+            <Region minWidth="50.0" HBox.hgrow="ALWAYS" />
             <Button mnemonicParsing="false" text="Settings" />
          </items>
       </ToolBar>
@@ -28,7 +30,7 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView prefHeight="200.0" prefWidth="200.0">
+            <TableView>
               <columns>
                 <TableColumn prefWidth="75.0" text="C1" />
                 <TableColumn prefWidth="75.0" text="C2" />
@@ -38,6 +40,10 @@
       </VBox>
    </center>
    <left>
-      <TreeView fx:id="serviceTreeView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <SplitPane>
+         <items>
+            <TreeView fx:id="serviceTreeView" BorderPane.alignment="CENTER" />
+         </items>
+      </SplitPane>
    </left>
 </BorderPane>

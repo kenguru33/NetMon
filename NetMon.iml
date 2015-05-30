@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="com.guigarage:controls:0.7" level="application" />
+    <orderEntry type="library" name="com.aquafx-project:aquafx:0.2" level="application" />
   </component>
 </module>

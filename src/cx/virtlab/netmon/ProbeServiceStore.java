@@ -34,8 +34,6 @@ public class ProbeServiceStore {
     }
 
     public void dummyData() {
-        this.probeServiceList.add(ProbeService.createProbeService(PingProbe.createPingProbe("192.168.1.1",1000),1000));
-        this.probeServiceList.add(ProbeService.createProbeService(PingProbe.createPingProbe("192.168.1.26",1000),1000));
-        this.probeServiceList.add(ProbeService.createProbeService(PingProbe.createPingProbe("192.168.1.111",1000),1000));
+
     }
 }

@@ -24,6 +24,11 @@ public class PortProbe implements Probe {
         return 0;
     }
 
+    @Override
+    public ProbeType getType() {
+        return ProbeType.Port;
+    }
+
     public String getUrl() {
         return null;
     }

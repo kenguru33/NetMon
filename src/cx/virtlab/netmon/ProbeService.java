@@ -4,7 +4,6 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,30 +12,14 @@ import java.util.List;
 
 public class ProbeService extends Service<ProbeResponse> {
 
-    List<Probe> probes;
-
     private Probe probe;
 
     private int interval;
     private String name = "ProbeServiceName";
 
-    private ProbeService(Probe probe, int interval) {
+    ProbeService(Probe probe, int interval) {
         this.probe = probe;
         this.interval = interval;
-    }
-
-    ProbeService(String name, int interval) {
-        this.name = name;
-        this.interval = interval;
-        this.probes = new ArrayList<>();
-    }
-
-
-
-
-
-    static ProbeService createProbeService(Probe probe, int interval) {
-        return new ProbeService(probe, interval);
     }
 
     @Override
@@ -53,10 +36,6 @@ public class ProbeService extends Service<ProbeResponse> {
 
     public Probe getProbe() {
         return probe;
-    }
-
-    public void setProbe(Probe probe) {
-        this.probe = probe;
     }
 
     public int getInterval() {

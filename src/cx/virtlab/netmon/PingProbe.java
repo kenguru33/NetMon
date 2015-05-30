@@ -10,13 +10,9 @@ public class PingProbe implements Probe {
     private Integer timeout;
     private String url;
 
-    private PingProbe(String url, Integer timeout) {
+    PingProbe(String url, Integer timeout) {
         this.url = url;
         this.timeout = timeout;
-    }
-
-    public static PingProbe createPingProbe(String url, Integer timeout) {
-        return new PingProbe(url, timeout);
     }
 
     @Override
@@ -39,19 +35,25 @@ public class PingProbe implements Probe {
             } else {
                 msg = "Connection to " + this.url + " Failed!";
             }
-            return ProbeResponse.createProbeResponse(reachable, msg);
+            return new ProbeResponse (reachable, msg);
         } catch (InterruptedException e) {
             e.printStackTrace();
             msg = e.getMessage();
         }
-        return ProbeResponse.createProbeResponse(reachable, msg);
+        return new ProbeResponse (reachable, msg);
     }
 
     public int getTimeout() {
         return timeout;
     }
 
+    @Override
+    public ProbeType getType() {
+        return ProbeType.Ping;
+    }
+
     public String getUrl() {
         return url;
     }
+
 }
